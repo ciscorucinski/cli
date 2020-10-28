@@ -146,7 +146,7 @@ func printHumanPrPreview(io *iostreams.IOStreams, pr *api.PullRequest) error {
 
 	// Header (Title and State)
 	fmt.Fprintln(out, cs.Bold(pr.Title))
-	fmt.Fprintf(out, "%s", shared.StateTitleWithColor(*pr))
+	fmt.Fprintf(out, "%s", shared.StateTitleWithColor(cs, *pr))
 	fmt.Fprintln(out, cs.Gray(fmt.Sprintf(
 		" • %s wants to merge %s into %s from %s",
 		pr.Author.Login,

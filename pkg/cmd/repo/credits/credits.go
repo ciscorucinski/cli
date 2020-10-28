@@ -168,7 +168,7 @@ func creditsRun(opts *CreditsOptions) error {
 		}
 
 		if isTTY && !static {
-			logins = append(logins, getColor(cs, x)(c.Login))
+			logins = append(logins, cs.ColorFromString(getColor(x))(c.Login))
 		} else {
 			fmt.Fprintf(out, "%s\n", c.Login)
 		}
@@ -184,7 +184,7 @@ func creditsRun(opts *CreditsOptions) error {
 
 	thankLines := strings.Split(thankYou, "\n")
 	for x, tl := range thankLines {
-		lines = append(lines, getColor(cs, x)(tl))
+		lines = append(lines, cs.ColorFromString(getColor(x))(tl))
 	}
 	lines = append(lines, "")
 	lines = append(lines, logins...)
@@ -277,14 +277,14 @@ func twinkle(starLine string) string {
 	return starLine
 }
 
-func getColor(cs *iostreams.ColorScheme, x int) func(string) string {
-	rainbow := []func(string) string{
-		cs.Magenta,
-		cs.Red,
-		cs.Yellow,
-		cs.Green,
-		cs.Cyan,
-		cs.Blue,
+func getColor(x int) string {
+	rainbow := []string{
+		"magenta",
+		"red",
+		"yellow",
+		"green",
+		"cyan",
+		"blue",
 	}
 
 	ix := x % len(rainbow)

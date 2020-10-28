@@ -129,10 +129,11 @@ func printHumanIssuePreview(io *iostreams.IOStreams, issue *api.Issue) error {
 	out := io.Out
 	now := time.Now()
 	ago := now.Sub(issue.CreatedAt)
+	cs := io.ColorScheme()
 
 	// Header (Title and State)
 	fmt.Fprintln(out, utils.Bold(issue.Title))
-	fmt.Fprint(out, issueStateTitleWithColor(issue.State))
+	fmt.Fprint(out, issueStateTitleWithColor(cs, issue.State))
 	fmt.Fprintln(out, utils.Gray(fmt.Sprintf(
 		" • %s opened %s • %s",
 		issue.Author.Login,
@@ -176,8 +177,8 @@ func printHumanIssuePreview(io *iostreams.IOStreams, issue *api.Issue) error {
 	return nil
 }
 
-func issueStateTitleWithColor(state string) string {
-	colorFunc := prShared.ColorFuncForState(state)
+func issueStateTitleWithColor(cs *iostreams.ColorScheme, state string) string {
+	colorFunc := cs.ColorFromString(prShared.ColorForState(state))
 	return colorFunc(strings.Title(strings.ToLower(state)))
 }
 
